@@ -1,6 +1,18 @@
+import { useActionData, useNavigate } from "react-router-dom";
 import styles from "./Navbar.module.css";
+import React from "react";
 
 const Navbar = () => {
+
+  const navigate = useNavigate();
+
+  function loginButton(){
+    navigate("/login")
+  }
+
+  function homeButton(){
+    navigate("/home")
+  }
 
   return (
     <header className="sticky-top">
@@ -34,7 +46,7 @@ const Navbar = () => {
             <ul className="navbar-nav mb-2 mb-sm-0">
               <li className={`nav-item ${styles.navBarLink}`}>
                 {/* Ao clicar, o usuário deve ser redirecionado a home, com react-router */}
-                <a className="nav-link" href="/home">
+                <a className="nav-link" onClick={homeButton}>
                   Home
                 </a>
               </li>
@@ -45,7 +57,8 @@ const Navbar = () => {
                 ao formulário de login
                 O botão de logout deverá ser testado darkmode
                 se sim, btn-dark, se não, btn-light */}
-                <a className="nav-link" href="/login">
+
+                <a className="nav-link" onClick={loginButton}>
                   Login
                 </a>
               </li>
