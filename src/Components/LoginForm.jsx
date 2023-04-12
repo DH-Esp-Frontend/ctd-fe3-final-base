@@ -1,9 +1,27 @@
+import { useNavigate } from "react-router";
+import api from "../services/api";
 import styles from "./Form.module.css";
+import { useContext, useState } from "react";
+import { LoginContext } from "../contexts/login-context";
 
 const LoginForm = () => {
+  const navigate = useNavigate();
+  const {saveToken} = useContext(LoginContext); 
 
-  const handleSubmit = (e) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
+  async function handleSubmit(event) {
+    event.preventDefault();
+    try{
+      const response = await api.post("/auth", {username, password});
+      this.saveToken(response.data.token);  
+      navigate("/home")
+      alert("Bem-Vindo")
+    } catch (error){
+      console.log(error);
+      alert("Verifique suas informações novamente.")
+    }
     //Nesse handlesubmit você deverá usar o preventDefault,
     //enviar os dados do formulário e enviá-los no corpo da requisição 
     //para a rota da api que faz o login /auth
@@ -26,6 +44,9 @@ const LoginForm = () => {
               className={`form-control ${styles.inputSpacing}`}
               placeholder="Login"
               name="login"
+              value={username}
+              onChange={(event) => setUsername(event.target.value)}
+              minLength={5}
               required
             />
             <input
@@ -33,6 +54,8 @@ const LoginForm = () => {
               placeholder="Password"
               name="password"
               type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
               required
             />
             <button className="btn btn-primary" type="submit">
