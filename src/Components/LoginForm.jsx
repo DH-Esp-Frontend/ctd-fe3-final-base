@@ -15,7 +15,7 @@ const LoginForm = () => {
     event.preventDefault();
     try{
       const response = await api.post("/auth", {username, password});
-      this.saveToken(response.data.token);  
+      saveToken(response.data.token);  
       navigate("/home")
       alert("Bem-Vindo")
     } catch (error){

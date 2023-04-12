@@ -4,9 +4,8 @@ export const LoginContext = createContext({});
 
 const LoginProvider = ({ children }) => {
 
-function saveToken(token){
+function saveToken(token) {
     localStorage.setItem("@times_token", token);
-    console.log("Chegou ate aqui")
 }
 
 function removeUserStorage() {
