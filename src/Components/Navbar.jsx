@@ -1,13 +1,35 @@
 import { useActionData, useNavigate } from "react-router-dom";
 import styles from "./Navbar.module.css";
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import { LoginContext } from "../contexts/login-context";
+import { func } from "prop-types";
 
 const Navbar = () => {
 
   const navigate = useNavigate();
+  const {username, removeUserStorage} = useContext(LoginContext);
+  const token = localStorage.getItem("@times_token");
+
+
+  useEffect(() => {
+
+    if (!token){
+      navigate("/home");
+    }
+  }, [])
+
+  function logout(){
+    removeUserStorage();
+    navigate("/home");
+  }
+
 
   function loginButton(){
-    navigate("/login")
+/*     if(!token){ */
+      navigate("/login")
+/*     } else{
+      logout()
+    } */
   }
 
   function homeButton(){
@@ -24,7 +46,7 @@ const Navbar = () => {
       >
         <div className="container">
           {/* Ao clicar, o usuário deve ser redirecionado a home, com react-router */}
-          <a className={`navbar-brand ${styles.navbarBrand}`} href="/home">
+          <a className={`navbar-brand ${styles.navbarBrand}`} onClick={homeButton}>
             DH Odonto
           </a>
           <button
@@ -58,9 +80,10 @@ const Navbar = () => {
                 O botão de logout deverá ser testado darkmode
                 se sim, btn-dark, se não, btn-light */}
 
-                <a className="nav-link" onClick={loginButton}>
-                  Login
+                <a  className="nav-link" id="loginButton" onClick={loginButton}>
+                Login
                 </a>
+
               </li>
               <li className={`nav-item`}>
                 {/* Ao ser clicado, esse botão mudará a aplicação para dark mode ou light mode.
