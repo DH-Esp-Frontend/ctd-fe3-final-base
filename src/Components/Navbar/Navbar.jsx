@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./Navbar.module.css";
-import React, { useContext, useEffect, useState } from "react";
-import { LoginContext } from "../contexts/login-context";
+import React, { useContext, useEffect } from "react";
+import { LoginContext } from "../../contexts/login-context";
+import { func } from "prop-types";
 
 const Navbar = () => {
 

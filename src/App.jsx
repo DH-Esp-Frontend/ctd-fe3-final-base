@@ -1,9 +1,11 @@
 import { Outlet } from "react-router-dom";
-import Footer from "./Components/Footer";
-import Navbar from "./Components/Navbar";
+import Footer from "./Components/Footer/Footer";
+import Navbar from "./Components/Navbar/Navbar";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Routes/Home";
 import Login from "./Routes/Login";
+import Detail from "./Routes/Detail";
+import Queries from "./Routes/Queries";
 import LoginProvider from "./contexts/login-context";
 
 function App() {
@@ -18,8 +20,11 @@ function App() {
             <main>
               {/*           <Outlet /> */}
               <Routes>
-                <Route path="/login" element={<Login />} />
+                <Route path="/" element={<Home />} />
                 <Route path="/home" element={<Home />} />
+                <Route path="/detail/:id" element={<Detail />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/queries" element={<Queries />} />
               </Routes>
             </main>
             <Footer />

@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router";
-import api from "../services/api";
+import api from "../../services/api";
 import styles from "./Form.module.css";
 import { useContext, useState } from "react";
-import { LoginContext } from "../contexts/login-context";
+import { LoginContext } from "../../contexts/login-context";
 
 const LoginForm = () => {
   const navigate = useNavigate();
