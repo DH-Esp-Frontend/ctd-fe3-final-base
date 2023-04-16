@@ -1,10 +1,22 @@
-import { useActionData, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "./Navbar.module.css";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { LoginContext } from "../contexts/login-context";
-import { func } from "prop-types";
 
 const Navbar = () => {
+
+  const [textLogin, setTextLogin] = useState("Login")
+
+  const changeTextLogin = (text) => setTextLogin(text);
+
+  useEffect(() => {
+
+    if(token){
+      setTextLogin("Logout")
+    } else {
+      setTextLogin("Login")
+    }
+  })
 
   const navigate = useNavigate();
   const {username, removeUserStorage} = useContext(LoginContext);
@@ -25,11 +37,11 @@ const Navbar = () => {
 
 
   function loginButton(){
-/*     if(!token){ */
+      if(!token){ 
       navigate("/login")
-/*     } else{
+     } else{
       logout()
-    } */
+    } 
   }
 
   function homeButton(){
@@ -81,7 +93,7 @@ const Navbar = () => {
                 se sim, btn-dark, se não, btn-light */}
 
                 <a  className="nav-link" id="loginButton" onClick={loginButton}>
-                Login
+                {textLogin}
                 </a>
 
               </li>
