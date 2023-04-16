@@ -1,18 +1,35 @@
-import { useEffect } from "react";
-import ScheduleFormModal from "./ScheduleFormModal";
+import { useEffect, useState } from "react";
+import ScheduleFormModal from "../ScheduleFormModal/ScheduleFormModal";
 import styles from "./DetailCard.module.css";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const DetailCard = () => {
+  const [name, setName] = useState('');
+  const [surname, setSurname] = useState('');
+  const [username, setUserame] = useState('');
+
+  const { id } = useParams();
+
+  async function getDentist(){
+    try{
+      const {data} = await axios.get(`https://dhodonto.ctdprojetos.com.br/dentista?matricula=${id}`);
+
+      setName(data.nome);
+      setSurname(data.sobrenome);
+      setUserame(data.usuario.username)
+
+    } catch(err){
+      console.log(err);
+    }
+  }
 
   useEffect(() => {
-    //Nesse useEffect, você vai fazer um fetch na api passando o 
-    //id do dentista que está vindo do react-router e carregar os dados em algum estado
+    getDentist()
   }, []);
   return (
-    //As instruções que estão com {''} precisam ser 
-    //substituídas com as informações que vem da api
     <>
-      <h1>Detail about Dentist {'Nome do Dentista'} </h1>
+      <h1>Details about {name} </h1>
       <section className="card col-sm-12 col-lg-6 container">
         {/* //Na linha seguinte deverá ser feito um teste se a aplicação
         // está em dark mode e deverá utilizar o css correto */}
@@ -28,12 +45,12 @@ const DetailCard = () => {
           </div>
           <div className="col-sm-12 col-lg-6">
             <ul className="list-group">
-              <li className="list-group-item">Nome: {'Nome do Dentista'}</li>
+              <li className="list-group-item">Nome: {name}</li>
               <li className="list-group-item">
-                Sobrenome: {'Sobrenome do Dentista'}
+                Sobrenome: {surname}
               </li>
               <li className="list-group-item">
-                Usuário: {'Nome de usuário do Dentista'}
+                Usuário: {username}
               </li>
             </ul>
             <div className="text-center">
