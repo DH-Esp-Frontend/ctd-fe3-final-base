@@ -1,6 +1,7 @@
-import LoginForm from "../Components/LoginForm";
+import LoginForm from "../Components/Form/LoginForm";
 
 const Contact = () => {
+
   return (
     <>
       <h1>Login</h1>
