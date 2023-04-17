@@ -1,13 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import ScheduleFormModal from "../ScheduleFormModal/ScheduleFormModal";
 import styles from "./DetailCard.module.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import ThemeContext, { themes } from '../../contexts/theme-context';
 
 const DetailCard = () => {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [username, setUserame] = useState('');
+
+  const {theme, handleChangeTheme} = useContext(ThemeContext);
 
   const { id } = useParams();
 
@@ -34,7 +37,7 @@ const DetailCard = () => {
         {/* //Na linha seguinte deverá ser feito um teste se a aplicação
         // está em dark mode e deverá utilizar o css correto */}
         <div
-          className={`card-body row`}
+          className={`card-body row ${theme === themes.dark ? 'cardDark' : ''}`}
         >
           <div className="col-sm-12 col-lg-6">
             <img
@@ -59,8 +62,7 @@ const DetailCard = () => {
               <button
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
-                className={`btn btn-light ${styles.button
-                  }`}
+                className={`btn ${theme === themes.dark ? 'btn-dark' : 'btn-light'} ${styles.button}`}
               >
                 Marcar consulta
               </button>

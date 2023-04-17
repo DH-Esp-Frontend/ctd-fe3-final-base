@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import styles from './ScheduleForm.module.css';
 import api from '../../services/api';
+import ThemeContext, { themes } from '../../contexts/theme-context';
 
 const ScheduleForm = () => {
   useEffect(() => {
@@ -11,6 +12,8 @@ const ScheduleForm = () => {
   const [paciente, setPaciente] = useState([]);
   const [dentista, setDentista] = useState([]);
   const [token, setToken] = useState('');
+
+  const {theme, handleChangeTheme} = useContext(ThemeContext);
 
   async function getData() {
     try {
@@ -55,7 +58,7 @@ const ScheduleForm = () => {
       {/* //Na linha seguinte deverá ser feito um teste se a aplicação
         // está em dark mode e deverá utilizar o css correto */}
       {console.log(paciente)}
-      <div className={`text-center container}`}>
+      <div className={`text-center container ${theme === themes.dark ? '${styles.cardDark}' : ''}`}>
         <form onSubmit={handleSubmit}>
           <div className={`row ${styles.rowSpacing}`}>
             <div className="col-sm-12 col-lg-6">
@@ -117,7 +120,7 @@ const ScheduleForm = () => {
             {/* //Na linha seguinte deverá ser feito um teste se a aplicação
         // está em dark mode e deverá utilizar o css correto */}
             <button
-              className={`btn btn-light ${styles.button}`}
+              className={`btn ${styles.button} ${theme === themes.dark ? 'btn-dark' : 'btn-light'}`}
               type="submit"
             >
               Schedule

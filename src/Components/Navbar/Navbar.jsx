@@ -3,12 +3,15 @@ import styles from "./Navbar.module.css";
 import React, { useContext, useEffect } from "react";
 import { LoginContext } from "../../contexts/login-context";
 import { func } from "prop-types";
+import ThemeContext, { themes } from '../../contexts/theme-context';
 
 const Navbar = () => {
 
   const navigate = useNavigate();
   const {username, removeUserStorage} = useContext(LoginContext);
   const token = localStorage.getItem("@times_token");
+
+  const {theme, handleChangeTheme} = useContext(ThemeContext);
 
 
   useEffect(() => {
@@ -41,7 +44,7 @@ const Navbar = () => {
       {/* //Na linha seguinte deverá ser feito um teste se a aplicação
         // está em dark mode e deverá utilizar navbar-dark bg-dark ou navbar-light bg-light*/}
       <nav
-        className={`navbar navbar-expand-sm navbar-light bg-light`}
+        className={`navbar navbar-expand-sm ${theme === themes.dark ? 'navbar-dark bg-dark' : 'navbar-light bg-light'}`}
         aria-label="Third navbar example"
       >
         <div className="container">
@@ -80,7 +83,7 @@ const Navbar = () => {
                 O botão de logout deverá ser testado darkmode
                 se sim, btn-dark, se não, btn-light */}
 
-                <a  className="nav-link" id="loginButton" onClick={loginButton}>
+                <a  className={`nav-link ${theme === themes.dark ? 'btn-dark' : 'btn-light'}`} id="loginButton" onClick={loginButton}>
                 Login
                 </a>
 
@@ -90,11 +93,8 @@ const Navbar = () => {
                  Lembre-se de usar um estado no contexto para fazer essa alteração.
                  Na linha seguinte deverá ser feito um teste se a aplicação
                  está em dark mode e deverá utilizar o icone ☀ ou 🌙 e btn-dark ou btn-light*/}
-                <button
-                  className={`btn btn-light${styles.btnStyle
-                    }`}
-                >
-                  ☀ 🌙{" "}
+                <button onClick={handleChangeTheme} className={`btn ${styles.btnStyle} ${theme === themes.dark ? 'btn-dark' : 'btn-light'}`}>
+                  <text>{theme === themes.dark ? "☀" : "🌙"}</text>
                 </button>
               </li>
             </ul>
